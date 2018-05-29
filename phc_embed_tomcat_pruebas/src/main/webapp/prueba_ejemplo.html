@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div>Esto es una prueba</div>
+        <div id="datos"></div>
+        <div id="status"></div>
+    </body>
+
+    <script>
+        function mostrarDatos(datos){
+            for(i = 0; i < datos.length; i++){
+                var fila = datos[i];
+                $("#datos").append(fila);
+                $("#datos").append("<br>");
+            }
+        }
+        
+        $(function(){
+            
+            $.ajax({
+                url:'ejemplo',
+                dataType:"json",
+                beforeSend:function(){
+                    $("#status").html("Cargando datos...");
+                },
+                success:function(response){
+                    mostrarDatos(response);
+                    $("#status").html("Datos cargados");
+                }
+            });
+            
+            $.ajax({
+                type: "POST",
+                url:'hello',
+                dataType:"json",
+                beforeSend:function(){
+                    $("#status").html("Cargando datos...");
+                },
+                success:function(response){
+                    mostrarDatos(response);
+                    $("#status").html("Datos cargados");
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status);
+                    alert(xhr.responseText);
+                    //alert(thrownError);
+                }
+            });
+            
+        });
+    </script>
+</html>
